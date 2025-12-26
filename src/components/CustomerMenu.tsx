@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Search, ShoppingCart, Plus, Minus, X, UtensilsCrossed, ChevronRight } from 'lucide-react';
 import { supabase, MenuItem, CartItem } from '../lib/supabase';
+import { useSearchParams } from 'react-router-dom';
+
+// Di dalam fungsi utama CustomerMenu:
+const [searchParams] = useSearchParams();
+const tableFromUrl = searchParams.get('table'); // Mengambil angka dari ?table=1
 
 export default function CustomerMenu() {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
@@ -11,7 +16,7 @@ export default function CustomerMenu() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [customerName, setCustomerName] = useState('');
-  const [tableNumber, setTableNumber] = useState('');
+  const [tableNumber, setTableNumber] = useState(tableFromUrl || '');
   const [notes, setNotes] = useState('');
   const [loading, setLoading] = useState(true);
   const [orderSuccess, setOrderSuccess] = useState(false);
